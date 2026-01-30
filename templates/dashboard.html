@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card">
+    <h2>👤 ملف الطالب: {{ user['username'] }}</h2>
+    <h3>النقاط الحالية: <span style="color: #00adb5;">{{ user['score'] }} XP</span></h3>
+    <p>مستوى التقدم: مبتدئ</p>
+    <div style="background:#ddd; height:20px; width:100%; border-radius:10px;">
+        <div style="background:#e43f5a; height:20px; width: {{ (user['score']/200)*100 }}%; border-radius:10px;"></div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>🎯 السيناريوهات المتاحة</h2>
+    <ul>
+        <li>
+            <strong>هجوم حقن قواعد البيانات (SQL Injection):</strong> 
+            محاولة تجاوز شاشة الدخول باستخدام ثغرات برمجية.
+            <br><a href="/challenge/sql">ابدأ المهمة >></a>
+        </li>
+        <hr>
+        <li>
+            <strong>هجوم الفدية (Ransomware Simulation):</strong> 
+            الشاشة مغلقة، وعليك تحليل الأكواد للعثور على مفتاح فك التشفير.
+            <br><a href="/challenge/ransomware">ابدأ المهمة >></a>
+        </li>
+        <li>
+    <strong>الهندسة الاجتماعية (Phishing):</strong> 
+    اختبر وعيك الأمني ضد روابط التصيّد الاحتيالي.
+    <br><a href="/challenge/phishing">ابدأ المهمة >></a>
+</li>
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card">
+    <h2>💉 مهمة: SQL Injection</h2>
+    <p>المطلوب: حاول الدخول كمسؤول (Admin) دون معرفة كلمة المرور. تلميح: استخدم الرموز <code>' OR '1'='1</code></p>
+    
+    <form method="POST">
+        <label>اسم المستخدم:</label><br>
+        <input type="text" name="username" placeholder="admin"><br>
+        <label>كلمة المرور:</label><br>
+        <input type="password" name="password" placeholder="******"><br>
+        <button type="submit">تسجيل الدخول</button>
+    </form>
+    
+    {% if msg %}
+        <h3 class="{{ 'success' if 'نجح' in msg else 'fail' }}">{{ msg }}</h3>
+    {% endif %}
+</div>
+
+<div class="card">
+    <p>💡 كيف يعمل هذا الهجوم؟ يقوم المهاجم بخداع قاعدة البيانات لتقرأ الشرط (1=1) وهو دائماً صحيح.</p>
+</div>
+{% endblock %}

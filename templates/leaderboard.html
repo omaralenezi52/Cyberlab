@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المتصدرين - NBU Cyber Range</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #0f1419 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 2rem;
+        }
+        
+        .navbar {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+        
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            color: #c9a962;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-decoration: none;
+        }
+        
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: rgba(45, 95, 63, 0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #c9a962, #d4b76a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #2d5f3f, #c9a962);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-subtitle {
+            color: #b8b8b8;
+            font-size: 1.1rem;
+        }
+        
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .podium-item {
+            flex: 1;
+            max-width: 250px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .podium-rank {
+            background: rgba(22, 33, 62, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px 20px 0 0;
+            padding: 2rem 1.5rem;
+            border: 2px solid;
+            transition: all 0.3s;
+        }
+        
+        .podium-rank:hover {
+            transform: translateY(-10px);
+        }
+        
+        .podium-item:nth-child(2) .podium-rank {
+            border-color: #FFD700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(22, 33, 62, 0.7));
+        }
+        
+        .podium-item:nth-child(1) .podium-rank {
+            border-color: #C0C0C0;
+            background: linear-gradient(135deg, rgba(192, 192, 192, 0.1), rgba(22, 33, 62, 0.7));
+        }
+        
+        .podium-item:nth-child(3) .podium-rank {
+            border-color: #CD7F32;
+            background: linear-gradient(135deg, rgba(205, 127, 50, 0.1), rgba(22, 33, 62, 0.7));
+        }
+        
+        .crown {
+            font-size: 2.5rem;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+        
+        .podium-item:nth-child(2) .crown {
+            color: #FFD700;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+        
+        .podium-item:nth-child(1) .crown {
+            color: #C0C0C0;
+            font-size: 2rem;
+            top: -20px;
+        }
+        
+        .podium-item:nth-child(3) .crown {
+            color: #CD7F32;
+            font-size: 2rem;
+            top: -20px;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d5f3f, #c9a962);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            border: 3px solid;
+        }
+        
+        .podium-item:nth-child(2) .avatar {
+            border-color: #FFD700;
+            width: 100px;
+            height: 100px;
+            font-size: 2.5rem;
+        }
+        
+        .username {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .score {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #c9a962;
+        }
+        
+        .podium-base {
+            background: rgba(45, 95, 63, 0.3);
+            padding: 1rem;
+            border-radius: 0 0 20px 20px;
+            font-size: 2rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .podium-item:nth-child(2) .podium-base {
+            padding: 2rem 1rem;
+        }
+        
+        .leaderboard-table {
+            background: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            animation: fadeIn 1.2s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .table-header {
+            background: linear-gradient(135deg, #2d5f3f, #3d7f5f);
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 80px 1fr 150px;
+            gap: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .table-row {
+            padding: 1.2rem 1.5rem;
+            display: grid;
+            grid-template-columns: 80px 1fr 150px;
+            gap: 1rem;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 169, 98, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .table-row:hover {
+            background: rgba(45, 95, 63, 0.2);
+            transform: translateX(-5px);
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .rank-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(201, 169, 98, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .player-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d5f3f, #c9a962);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            border: 2px solid rgba(201, 169, 98, 0.3);
+        }
+        
+        .player-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .score-badge {
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.2), rgba(45, 95, 63, 0.2));
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            border: 1px solid rgba(201, 169, 98, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .podium {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .podium-item {
+                max-width: 100%;
+            }
+            
+            .table-header,
+            .table-row {
+                grid-template-columns: 60px 1fr 100px;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-shield-halved"></i> NBU Cyberlab
+            </a>
+            <a href="/" class="nav-link">
+                <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h1 class="header-title">لوحة المتصدرين</h1>
+            <p class="header-subtitle">أبطال التحديات السيبرانية</p>
+        </div>
+        
+        {% if users|length >= 3 %}
+        <div class="podium">
+            <!-- Second Place -->
+            <div class="podium-item">
+                <div class="podium-rank">
+                    <div class="crown">👑</div>
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="username">{{ users[1]['username'] }}</div>
+                    <div class="score">{{ users[1]['score'] }} <i class="fas fa-star"></i></div>
+                </div>
+                <div class="podium-base">#2</div>
+            </div>
+            
+            <!-- First Place -->
+            <div class="podium-item">
+                <div class="podium-rank">
+                    <div class="crown">👑</div>
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="username">{{ users[0]['username'] }}</div>
+                    <div class="score">{{ users[0]['score'] }} <i class="fas fa-star"></i></div>
+                </div>
+                <div class="podium-base">#1</div>
+            </div>
+            
+            <!-- Third Place -->
+            <div class="podium-item">
+                <div class="podium-rank">
+                    <div class="crown">👑</div>
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="username">{{ users[2]['username'] }}</div>
+                    <div class="score">{{ users[2]['score'] }} <i class="fas fa-star"></i></div>
+                </div>
+                <div class="podium-base">#3</div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="leaderboard-table">
+            <div class="table-header">
+                <div>المركز</div>
+                <div>اللاعب</div>
+                <div>النقاط</div>
+            </div>
+            
+            {% for user in users %}
+            <div class="table-row">
+                <div class="rank-badge">{{ loop.index }}</div>
+                <div class="player-info">
+                    <div class="player-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="player-name">{{ user['username'] }}</div>
+                </div>
+                <div class="score-badge">
+                    {{ user['score'] }} <i class="fas fa-star"></i>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

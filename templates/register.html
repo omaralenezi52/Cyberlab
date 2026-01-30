@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - NBU Cyber Range</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #0f1419 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-y: auto; 
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(45, 95, 63, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(201, 169, 98, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .register-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeInUp 0.8s ease-out;
+            margin: 2rem 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .register-card {
+            background: rgba(22, 33, 62, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .register-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #2d5f3f, #c9a962, #2d5f3f);
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+            animation: borderGlow 3s infinite;
+        }
+        
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo-icon {
+            font-size: 4rem;
+            color: #c9a962;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .register-title {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #2d5f3f, #c9a962);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .register-subtitle {
+            color: #b8b8b8;
+            font-size: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 1rem; /* الأيقونة في أقصى اليمين */
+            top: 50%;
+            transform: translateY(-50%);
+            color: #c9a962;
+            font-size: 1.1rem;
+            pointer-events: none; /* لمنع الأيقونة من اعتراض النقر */
+            z-index: 2;
+        }
+        
+        .form-input {
+            width: 100%;
+            /* تم تعديل المسافات الداخلية (Padding) هنا:
+               3.5rem من اليمين: لإعطاء مساحة للأيقونة حتى لا يكتب النص فوقها
+               1rem من اليسار: مسافة عادية
+            */
+            padding: 1rem 1rem 1rem 3.5rem; /* top left bottom right -> خطأ شائع في العربية */
+            padding: 1rem 1rem 1rem 1rem; /* reset */
+            
+            /* التعديل الصحيح للعربية RTL: (فوق - يسار - تحت - يمين) أو (فوق - يمين - تحت - يسار) حسب المتصفح */
+            /* لكن الأضمن استخدام القيم المباشرة: */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-right: 3.5rem; /* مسافة كبيرة من اليمين للأيقونة */
+            padding-left: 1rem;    /* مسافة عادية من اليسار */
+            
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(201, 169, 98, 0.2);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+            outline: none;
+        }
+        
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #c9a962;
+            box-shadow: 0 0 20px rgba(201, 169, 98, 0.2);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s;
+        }
+        
+        .btn-register {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #2d5f3f, #3d7f5f);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-register:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(45, 95, 63, 0.5);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(201, 169, 98, 0.2);
+        }
+        
+        .divider span {
+            background: rgba(22, 33, 62, 0.9);
+            padding: 0 1rem;
+            color: #b8b8b8;
+            position: relative;
+        }
+        
+        .login-link {
+            text-align: center;
+            color: #b8b8b8;
+        }
+        
+        .login-link a {
+            color: #c9a962;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .login-link a:hover {
+            color: #d4b76a;
+            text-shadow: 0 0 10px rgba(201, 169, 98, 0.5);
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .back-link a {
+            color: #b8b8b8;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .back-link a:hover {
+            color: #c9a962;
+        }
+        
+        @media (max-width: 768px) {
+            .register-card {
+                padding: 2rem;
+            }
+            .register-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <div class="logo-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h1 class="register-title">إنشاء حساب جديد</h1>
+                <p class="register-subtitle">انضم لمنصة التحديات السيبرانية</p>
+            </div>
+            
+            <form method="POST">
+                
+                <div class="form-group">
+                    <label class="form-label">الاسم الكامل</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-signature input-icon"></i>
+                        <input type="text" name="fullname" class="form-input" placeholder="الاسم الثلاثي" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">اسم المستخدم</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" name="username" class="form-input" placeholder="اختر اسم مستخدم" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">البريد الإلكتروني</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" name="email" class="form-input" placeholder="example@email.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">رقم الجوال</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" name="phone" class="form-input" placeholder="05xxxxxxxx" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">العمر</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-hourglass-half input-icon"></i>
+                        <input type="number" name="age" class="form-input" placeholder="العمر" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">كلمة المرور</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" name="password" id="password" class="form-input" placeholder="أدخل كلمة مرور قوية" required>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-register">
+                    <i class="fas fa-user-plus"></i>
+                    <span>إنشاء الحساب</span>
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>أو</span>
+            </div>
+            
+            <div class="login-link">
+                <p>لديك حساب بالفعل؟ <a href="/login">سجل دخول</a></p>
+            </div>
+            
+            <div class="back-link">
+                <a href="/">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>العودة للرئيسية</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('strengthBar');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            
+            if (password.length >= 6) strength += 25;
+            if (password.length >= 10) strength += 25;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 25;
+            if (/\d/.test(password) && /\W/.test(password)) strength += 25;
+            
+            strengthBar.style.width = strength + '%';
+            
+            if (strength <= 25) {
+                strengthBar.style.background = '#ff4444';
+            } else if (strength <= 50) {
+                strengthBar.style.background = '#ffaa00';
+            } else if (strength <= 75) {
+                strengthBar.style.background = '#ffdd00';
+            } else {
+                strengthBar.style.background = '#00ff00';
+            }
+        });
+    </script>
+</body>
+</html>

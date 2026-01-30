@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التحديات - NBU Cyber Range</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #0f1419 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 2rem;
+        }
+        
+        .navbar {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+        
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            color: #c9a962;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links-group {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover { background: rgba(201, 169, 98, 0.2); color: #c9a962; }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .header { text-align: center; margin-bottom: 2rem; animation: fadeInDown 0.8s ease-out; }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .filter-nav { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            background: rgba(22, 33, 62, 0.6);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #c9a962;
+            color: #0a0e27;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(201, 169, 98, 0.4);
+        }
+        
+        .header-icon { font-size: 4rem; color: #c9a962; margin-bottom: 1rem; }
+        
+        .header-title {
+            font-size: 2.5rem; font-weight: 900;
+            background: linear-gradient(135deg, #2d5f3f, #c9a962);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 0.5rem;
+        }
+        
+        .header-subtitle { color: #b8b8b8; font-size: 1.1rem; }
+        
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .challenge-card {
+            background: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: #c9a962;
+        }
+        
+        .challenge-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+        
+        .challenge-icon {
+            width: 60px; height: 60px; border-radius: 15px;
+            background: linear-gradient(135deg, rgba(45, 95, 63, 0.3), rgba(201, 169, 98, 0.3));
+            display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #c9a962;
+        }
+        
+        .challenge-difficulty { padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+        
+        .diff-easy { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.3); }
+        .diff-medium { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.3); }
+        .diff-hard { background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.3); }
+        .diff-impossible { background: rgba(138, 43, 226, 0.2); color: #9370db; border: 1px solid rgba(138, 43, 226, 0.3); }
+        
+        .challenge-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; color: #ffffff; }
+        
+        .challenge-desc { color: #b8b8b8; line-height: 1.6; margin-bottom: 1.5rem; height: 3.2em; overflow: hidden; }
+        
+        .challenge-footer { display: flex; justify-content: space-between; align-items: center; }
+        
+        .challenge-points {
+            display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+            background: rgba(201, 169, 98, 0.2); border-radius: 20px; font-weight: 700; border: 1px solid rgba(201, 169, 98, 0.3);
+        }
+        
+        .challenge-points i { color: #c9a962; }
+        
+        .challenge-btn {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, #2d5f3f, #3d7f5f);
+            color: white; text-decoration: none; border-radius: 10px; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s;
+        }
+        
+        .challenge-btn:hover { transform: translateX(-5px); box-shadow: 0 5px 20px rgba(45, 95, 63, 0.5); }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-shield-halved"></i> NBU Cyberlab
+            </a>
+            <div class="nav-links-group">
+                <a href="/leaderboard" class="nav-link"><i class="fas fa-trophy"></i> المتصدرين</a>
+                <a href="/profile" class="nav-link"><i class="fas fa-user"></i> الملف الشخصي</a>
+                <a href="/" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="header">
+            <div class="header-icon"><i class="fas fa-flag-checkered"></i></div>
+            <h1 class="header-title">التحديات المتاحة</h1>
+            <p class="header-subtitle">اختبر مهاراتك في الأمن السيبراني</p>
+        </div>
+
+        <div class="filter-nav">
+            
+            
+          
+        </div>
+        
+        <div class="challenges-grid">
+            {% for chal in challenges %}
+            <div class="challenge-card challenge-item" data-category="{{ chal.category }}">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        {% if 'SQL' in chal.name %}
+                            <i class="fas fa-database"></i>
+                        {% elif 'Net' in chal.name %}
+                            <i class="fas fa-wifi"></i>
+                        {% elif 'Maze' in chal.name %}
+                            <i class="fas fa-network-wired"></i>
+                        {% elif 'Ransom' in chal.name %}
+                            <i class="fas fa-lock"></i>
+                        {% elif 'Bait' in chal.name %}
+                            <i class="fas fa-usb"></i>
+                        {% elif 'Support' in chal.name %}
+                            <i class="fas fa-headset"></i>
+                        {% elif 'Terminal' in chal.name %}
+                            <i class="fas fa-terminal"></i>
+                        {% elif 'Analysis' in chal.name %}
+                            <i class="fas fa-magnifying-glass-chart"></i>
+                        {% elif 'Social' in chal.name or 'Phishing' in chal.name %}
+                            <i class="fas fa-user-secret"></i>
+                        {% else %}
+                            <i class="fas fa-bug"></i>
+                        {% endif %}
+                    </div>
+                    <div class="challenge-difficulty 
+                        {% if chal.status == 'سهل' %}diff-easy
+                        {% elif chal.status == 'متوسط' %}diff-medium
+                        {% elif chal.status == 'مستحيل' %}diff-impossible
+                        {% else %}diff-hard{% endif %}">
+                        {{ chal.status }}
+                    </div>
+                </div>
+                
+                <h3 class="challenge-title">{{ chal.name }}</h3>
+                <p class="challenge-desc">{{ chal.desc }}</p>
+                
+                <div class="challenge-footer">
+                    <div class="challenge-points">
+                        <i class="fas fa-star"></i>
+                        <span>{{ chal.points }} نقطة</span>
+                    </div>
+                    <a href="{{ url_for(chal.url) }}" class="challenge-btn">
+                        <span>ابدأ الآن</span>
+                        <i class="fas fa-play"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+    function filterChallenges(category, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const items = document.querySelectorAll('.challenge-item');
+        items.forEach(item => {
+            const itemCategory = item.getAttribute('data-category');
+            if (category === 'all' || itemCategory === category) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+    </script>
+</body>
+</html>

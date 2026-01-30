@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - NBU Cyber Range</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #0f1419 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 2rem;
+        }
+        
+        .navbar {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(201, 169, 98, 0.2);
+        }
+        
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            color: #c9a962;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-decoration: none;
+        }
+        
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: rgba(45, 95, 63, 0.3);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .profile-card {
+            background: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid;
+            border-image: linear-gradient(135deg, #2d5f3f, #c9a962) 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .avatar-edit {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2d5f3f, #3d7f5f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .avatar-edit:hover {
+            transform: scale(1.1);
+        }
+        
+        .username {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #2d5f3f, #c9a962);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .user-role {
+            color: #b8b8b8;
+            font-size: 1.1rem;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(45, 95, 63, 0.2);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #c9a962;
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #c9a962;
+            margin-bottom: 0.8rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #b8b8b8;
+            font-size: 0.95rem;
+        }
+        
+        .progress-bar-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 30px;
+            margin-top: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2d5f3f, #c9a962);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: width 1s ease-out;
+        }
+        
+        .form-section {
+            background: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #c9a962;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(201, 169, 98, 0.2);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #c9a962;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .file-input-label {
+            padding: 0.8rem 1.5rem;
+            background: rgba(201, 169, 98, 0.2);
+            border: 1px solid rgba(201, 169, 98, 0.3);
+            border-radius: 10px;
+            color: #ffffff;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .file-input-wrapper:hover .file-input-label {
+            background: rgba(201, 169, 98, 0.3);
+        }
+        
+        .btn-save {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #2d5f3f, #3d7f5f);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 95, 63, 0.5);
+        }
+        
+        .achievements-section {
+            background: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 98, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+        
+        .achievements-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .achievement-badge {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, rgba(45, 95, 63, 0.3), rgba(201, 169, 98, 0.3));
+            border: 1px solid rgba(201, 169, 98, 0.4);
+            border-radius: 20px;
+            color: #ffffff;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .achievement-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(201, 169, 98, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .profile-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-shield-halved"></i> NBU Cyberlab
+            </a>
+            <a href="/" class="nav-link">
+                <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <img src="{{ url_for('static', filename='profile_pics/' + user['profile_pic']) }}" alt="Profile" class="avatar">
+                    <div class="avatar-edit">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </div>
+                <h1 class="username">{{ user['username'] }}</h1>
+                <p class="user-role">
+                    <i class="fas fa-user"></i> عضو في المنصة
+                </p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-value">{{ user['score'] }}</div>
+                    <div class="stat-label">إجمالي النقاط</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-value">{{ solved_list|length }}</div>
+                    <div class="stat-label">التحديات المنجزة</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-value">{{ (user['score'] / 200 * 100)|round|int }}%</div>
+                    <div class="stat-label">نسبة الإنجاز</div>
+                </div>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: {{ (user['score'] / 200 * 100)|round }}%">
+                    المستوى الحالي: {% if user['score'] < 50 %}مبتدئ{% elif user['score'] < 100 %}متوسط{% else %}محترف{% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-edit"></i>
+                تحديث البيانات
+            </h2>
+            
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="form-label">العمر</label>
+                    <input type="number" name="age" class="form-input" value="{{ user['age'] if user['age'] else '' }}" placeholder="أدخل عمرك">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">تغيير الصورة الشخصية</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="profile_pic" accept="image/*">
+                        <div class="file-input-label">
+                            <i class="fas fa-upload"></i>
+                            <span>اختر صورة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-save">
+                    <i class="fas fa-save"></i>
+                    حفظ التغييرات
+                </button>
+            </form>
+        </div>
+        
+        <div class="achievements-section">
+            <h2 class="section-title">
+                <i class="fas fa-medal"></i>
+                التحديات المنجزة
+            </h2>
+            
+            {% if solved_list %}
+            <div class="achievements-grid">
+                {% for item in solved_list %}
+                <div class="achievement-badge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>{{ item['challenge_id'] }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p style="color: #b8b8b8; text-align: center; padding: 2rem;">
+                <i class="fas fa-info-circle"></i>
+                لم تنجز أي تحديات بعد. ابدأ الآن!
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

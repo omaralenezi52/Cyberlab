@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي الدعم الفني | NBU CyberLab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .logo-container svg {
+            width: 40px;
+            height: 40px;
+            color: #3b82f6;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #3b82f6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+        }
+
+        /* Email Card */
+        .email-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .email-icon {
+            width: 35px;
+            height: 35px;
+            color: #ef4444;
+            flex-shrink: 0;
+        }
+
+        .email-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ef4444;
+            margin-bottom: 15px;
+        }
+
+        .email-content {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .email-meta {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #475569;
+        }
+
+        .email-meta p {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-bottom: 5px;
+        }
+
+        .email-subject {
+            color: #ef4444;
+        }
+
+        .email-body {
+            color: #d1d5db;
+            line-height: 1.8;
+        }
+
+        .email-body p {
+            margin-bottom: 15px;
+        }
+
+        .email-body ul {
+            margin: 15px 0;
+            padding-right: 25px;
+        }
+
+        .email-body li {
+            margin-bottom: 8px;
+        }
+
+        .warning-text {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .danger-text {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .alert-box {
+            display: flex;
+            gap: 12px;
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .alert-icon {
+            width: 24px;
+            height: 24px;
+            color: #fbbf24;
+            flex-shrink: 0;
+        }
+
+        .alert-text {
+            color: #fef3c7;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Options */
+        .options-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 25px;
+        }
+
+        .option {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #475569;
+            background: rgba(15, 23, 42, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .option:hover {
+            border-color: #3b82f6;
+            transform: translateX(-5px);
+        }
+
+        .option.selected {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .option.selected.wrong {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #9ca3af;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option.selected .radio {
+            border-color: #10b981;
+        }
+
+        .option.selected.wrong .radio {
+            border-color: #ef4444;
+        }
+
+        .radio-inner {
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .option.selected .radio-inner {
+            display: block;
+        }
+
+        .option.selected.wrong .radio-inner {
+            background: #ef4444;
+        }
+
+        .option-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .option-content p {
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        /* Button */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(to right, #3b82f6, #06b6d4);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 18px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background: linear-gradient(to right, #4b5563, #6b7280);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Result */
+        .result {
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid;
+            margin-top: 25px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        .result.error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        .result-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .result-icon {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+        }
+
+        .result.success .result-icon {
+            color: #10b981;
+        }
+
+        .result.error .result-icon {
+            color: #ef4444;
+        }
+
+        .result-message {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .tips-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 12px;
+        }
+
+        .tips-list {
+            list-style: disc;
+            padding-right: 25px;
+            color: #d1d5db;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .tips-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            background: #475569;
+            color: white;
+            font-weight: 600;
+            padding: 15px 40px;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .back-btn:hover {
+            background: #334155;
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+            </div>
+            <h1>تحدي الدعم الفني</h1>
+            <p class="subtitle">انتحال شخصية الدعم الفني - 20 نقطة</p>
+        </div>
+
+        <!-- Email Scenario -->
+        <div class="card">
+            <div class="email-header">
+                <svg class="email-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <h2 class="email-title">رسالة بريد إلكتروني مشبوهة</h2>
+            </div>
+
+            <div class="email-content">
+                <div class="email-meta">
+                    <p>من: support@company-help.com</p>
+                    <p>إلى: you@email.com</p>
+                    <p>الموضوع: <span class="email-subject">تحذير أمني عاجل - يتطلب إجراءً فورياً</span></p>
+                </div>
+
+                <div class="email-body">
+                    <p>عزيزي المستخدم،</p>
+                    <p>لقد اكتشفنا نشاطاً مشبوهاً على حسابك. لحماية بياناتك، نحتاج منك تأكيد معلومات الحساب فوراً.</p>
+                    <p class="warning-text">الرجاء الرد على هذا الإيميل بالمعلومات التالية:</p>
+                    <ul>
+                        <li>اسم المستخدم الكامل</li>
+                        <li>كلمة المرور الحالية</li>
+                        <li>رقم الهاتف المسجل</li>
+                        <li>تاريخ الميلاد</li>
+                    </ul>
+                    <p class="danger-text">تحذير: عدم الرد خلال 24 ساعة سيؤدي إلى تعليق حسابك!</p>
+                    <p>مع أطيب التحيات،<br>فريق الدعم الفني</p>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+                <p class="alert-text"><strong>السؤال:</strong> ما هو التصرف الصحيح في هذه الحالة؟</p>
+            </div>
+        </div>
+
+        <!-- Options Form -->
+        <form method="POST" id="challengeForm">
+            <div class="card">
+                <h3 class="options-title">اختر الإجراء المناسب:</h3>
+
+                <div class="option" data-value="reply">
+                    <div class="radio"><div class="radio-inner"></div></div>
+                    <div class="option-content">
+                        <h3>الرد بالمعلومات المطلوبة</h3>
+                        <p>إرسال اسم المستخدم وكلمة المرور عبر البريد الإلكتروني</p>
+                    </div>
+                </div>
+
+                <div class="option" data-value="official">
+                    <div class="radio"><div class="radio-inner"></div></div>
+                    <div class="option-content">
+                        <h3>التواصل عبر القنوات الرسمية</h3>
+                        <p>الاتصال بالدعم الفني عبر الموقع الرسمي أو الرقم المعتمد</p>
+                    </div>
+                </div>
+
+                <div class="option" data-value="ignore">
+                    <div class="radio"><div class="radio-inner"></div></div>
+                    <div class="option-content">
+                        <h3>تجاهل الرسالة تماماً</h3>
+                        <p>عدم الرد وحذف الإيميل</p>
+                    </div>
+                </div>
+
+                <input type="hidden" name="answer" id="answerInput">
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>إرسال الإجابة</button>
+            </div>
+        </form>
+
+        <!-- Result Message -->
+        {% if msg %}
+        <div class="result {{ 'success' if '✅' in msg else 'error' }} show">
+            <div class="result-header">
+                <svg class="result-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {% if '✅' in msg %}
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    {% else %}
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    {% endif %}
+                </svg>
+                <div class="result-message">{{ msg }}</div>
+            </div>
+            <p class="tips-title">💡 نصائح أمنية:</p>
+            <ul class="tips-list">
+                <li>لا ترسل كلمات المرور أبداً عبر البريد الإلكتروني</li>
+                <li>تحقق من عنوان البريد الإلكتروني للمرسل بدقة</li>
+                <li>استخدم القنوات الرسمية فقط للتواصل مع الدعم الفني</li>
+                <li>الشركات الموثوقة لن تطلب معلوماتك الحساسة عبر البريد</li>
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Back Button -->
+        <div class="text-center">
+            <a href="/challenges" class="back-btn">العودة للتحديات</a>
+        </div>
+    </div>
+
+    <script>
+        const options = document.querySelectorAll('.option');
+        const answerInput = document.getElementById('answerInput');
+        const submitBtn = document.getElementById('submitBtn');
+
+        options.forEach(option => {
+            option.addEventListener('click', function() {
+                options.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                answerInput.value = this.dataset.value;
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>

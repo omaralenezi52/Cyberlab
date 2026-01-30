@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow OS Simulation - المستحيل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            background: #000;
+            font-family: 'Tajawal', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* خلفية متحركة أسطورية */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0a0e27, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: 0;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* نجوم متحركة */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .desktop { 
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(0px);
+        }
+        
+        /* شبكة الأيقونات */
+        .icon-grid { 
+            display: grid;
+            gap: 30px;
+            padding: 40px;
+            width: 180px;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .icon { 
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            padding: 20px;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: rgba(0,0,0,0.6);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(201, 169, 98, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .icon:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .icon:hover { 
+            background: rgba(201, 169, 98, 0.2);
+            transform: scale(1.15) translateY(-5px);
+            border-color: #c9a962;
+            box-shadow: 0 10px 30px rgba(201, 169, 98, 0.4);
+        }
+        
+        .icon i { 
+            font-size: 2.5rem;
+            color: #c9a962;
+            margin-bottom: 10px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(201, 169, 98, 0.6));
+            transition: all 0.3s;
+        }
+        
+        .icon:hover i {
+            transform: rotateY(360deg);
+            filter: drop-shadow(0 0 20px rgba(201, 169, 98, 1));
+        }
+        
+        .icon span {
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        
+        /* النوافذ */
+        .window { 
+            width: 600px;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            border: 2px solid #c9a962;
+            position: absolute;
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            z-index: 100;
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9),
+                        0 0 100px rgba(201, 169, 98, 0.3);
+            animation: windowAppear 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes windowAppear {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scale(1) translateY(0);
+            }
+        }
+        
+        .window-header { 
+            background: linear-gradient(135deg, #c9a962 0%, #d4b875 100%);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #000;
+            font-weight: 900;
+            border-radius: 14px 14px 0 0;
+            box-shadow: 0 4px 15px rgba(201, 169, 98, 0.4);
+        }
+        
+        .window-header span:first-child {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .window-header span:last-child {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+        
+        .window-header span:last-child:hover {
+            background: #dc3545;
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .window-body { 
+            padding: 30px;
+            color: #e6edf3;
+            min-height: 350px;
+            line-height: 2;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .window-body p {
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 8px;
+            border-radius: 6px;
+            margin: 5px 0;
+        }
+        
+        .window-body p:hover {
+            background: rgba(201, 169, 98, 0.1);
+            padding-right: 15px;
+        }
+        
+        /* شريط المهام الأسطوري */
+        .taskbar { 
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,1) 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            border-top: 3px solid #c9a962;
+            z-index: 1000;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+        }
+        
+        /* زر الرجوع الأسطوري */
+        .back-btn {
+            position: fixed;
+            top: 25px;
+            right: 1300px;
+            z-index: 1001;
+            background: linear-gradient(135deg, #c9a962 0%, #d4b875 100%);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 30px rgba(201, 169, 98, 0.4);
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(201, 169, 98, 0.6);
+            background: linear-gradient(135deg, #d4b875 0%, #e5c98a 100%);
+            
+        }
+        
+        .back-btn i {
+            transition: transform 0.3s;
+        }
+        
+        .back-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* حقول الإدخال */
+        input[type="text"], 
+        input[type="password"] { 
+            background: rgba(22, 27, 34, 0.8);
+            border: 2px solid #30363d;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        input[type="text"]:focus, 
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #c9a962;
+            box-shadow: 0 0 20px rgba(201, 169, 98, 0.3);
+            transform: scale(1.02);
+        }
+        
+        /* الأزرار */
+        button {
+            background: linear-gradient(135deg, #c9a962 0%, #d4b875 100%);
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: all 0.3s;
+            color: #000;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            box-shadow: 0 5px 15px rgba(201, 169, 98, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201, 169, 98, 0.5);
+            background: linear-gradient(135deg, #d4b875 0%, #e5c98a 100%);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        /* Flag النهائي */
+        #finalFlag {
+            background: linear-gradient(135deg, rgba(201, 169, 98, 0.2) 0%, rgba(201, 169, 98, 0.1) 100%);
+            border: 3px dashed #c9a962;
+            border-radius: 15px;
+            padding: 25px;
+            animation: glowPulse 2s infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(201, 169, 98, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(201, 169, 98, 0.6);
+            }
+        }
+        
+        #finalFlag h2 {
+            color: #c9a962;
+            text-shadow: 0 0 20px rgba(201, 169, 98, 0.6);
+            font-size: 1.8rem;
+            animation: textGlow 1.5s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 20px rgba(201, 169, 98, 0.6);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(201, 169, 98, 1);
+            }
+        }
+        
+        /* رسالة الخطأ/النجاح */
+        .msg-display {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            animation: slideDown 0.5s;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* تأثيرات إضافية */
+        .glitch {
+            animation: glitch 1s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(201, 169, 98, 0.5);
+            }
+            25% {
+                text-shadow: -2px 0 10px rgba(201, 169, 98, 0.5);
+            }
+            50% {
+                text-shadow: 2px 0 10px rgba(201, 169, 98, 0.5);
+            }
+            75% {
+                text-shadow: 0 2px 10px rgba(201, 169, 98, 0.5);
+            }
+        }
+        
+        /* استجابة للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .window {
+                width: 95%;
+                top: 5%;
+            }
+            
+            .back-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .icon-grid {
+                width: 100%;
+                grid-template-columns: repeat(3, 1fr);
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- الخلفية المتحركة -->
+<div class="animated-bg"></div>
+
+<!-- النجوم -->
+<div class="stars" id="stars"></div>
+
+<!-- زر الرجوع -->
+<a href="/challenges" class="back-btn">
+    <i class="fas fa-arrow-right"></i>
+    <span>رجوع للتحديات</span>
+</a>
+
+<div class="desktop">
+    <div class="icon-grid">
+        <div class="icon" onclick="openWin('systemWin')">
+            <i class="fas fa-server"></i>
+            <span>ملفات النظام</span>
+        </div>
+        <div class="icon" onclick="openWin('mailWin')">
+            <i class="fas fa-envelope-open-text"></i>
+            <span>البريد المشفّر</span>
+        </div>
+        <div class="icon" onclick="openWin('vaultWin')">
+            <i class="fas fa-user-lock"></i>
+            <span>الخزنة الأمنية</span>
+        </div>
+    </div>
+
+    <!-- نافذة ملفات النظام -->
+    <div id="systemWin" class="window">
+        <div class="window-header">
+            <span><i class="fas fa-folder-open"></i> C:\System32\Backup\Logs</span>
+            <span onclick="closeWin('systemWin')">×</span>
+        </div>
+        <div class="window-body">
+            <div id="lvl1">
+                <p>📁 Root_User</p>
+                <p onclick="document.getElementById('lvl2').style.display='block'; this.style.color='#c9a962';">
+                    📁 Config_Hidden_Files
+                </p>
+                <div id="lvl2" style="display:none; padding-right: 20px;">
+                    <p>   📄 readme.txt (تالف)</p>
+                    <p onclick="showHint()" style="cursor:pointer">
+                        📄 التلميحة_الأمنية.bin
+                    </p>
+                    <p onclick="document.getElementById('lvl3').style.display='block';">
+                        📁 Encrypted_Data
+                    </p>
+                    <div id="lvl3" style="display:none; padding-right: 20px;">
+                        <p style="color:#dc3545">   🔒 رمز_البريد.enc (يحتاج فك تشفير)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة البريد -->
+    <div id="mailWin" class="window">
+        <div class="window-header">
+            <span><i class="fas fa-envelope"></i> Outlook Secure</span>
+            <span onclick="closeWin('mailWin')">×</span>
+        </div>
+        <div class="window-body">
+            <div id="mailLock">
+                <p><i class="fas fa-key"></i> أدخل كود الوصول للبريد (موجود في ملف bin):</p>
+                <input type="password" id="mailInput" placeholder="XXXX-XX">
+                <button onclick="checkMail()" style="margin-top:15px; width:100%;">
+                    <i class="fas fa-unlock"></i> دخول
+                </button>
+            </div>
+            <div id="mailContent" style="display:none;">
+                <p><b><i class="fas fa-shield-alt"></i> من: الأمن السيبراني</b></p>
+                <p style="margin-top: 15px;">لقد قمنا بتغيير رمز الخزنة النهائي. الرمز هو عبارة عن مجموع (سنة التأسيس 1446 + رقم الغرفة 505).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الخزنة -->
+    <div id="vaultWin" class="window">
+        <div class="window-header">
+            <span><i class="fas fa-lock"></i> Ultimate Vault</span>
+            <span onclick="closeWin('vaultWin')">×</span>
+        </div>
+        <div class="window-body">
+            <p><i class="fas fa-calculator"></i> أدخل الرمز الحسابي النهائي لفتح الخزنة:</p>
+            <input type="text" id="vaultInput" placeholder="KEY-XXXX">
+            <button onclick="checkVault()" style="margin-top:15px; width:100%;">
+                <i class="fas fa-key"></i> فتح الخزنة
+            </button>
+            <div id="finalFlag" style="display:none; margin-top:25px; text-align:center;">
+                <p>🏆 تهانينا أيها العبقري! الـ Flag هو:</p>
+                <h2 class="glitch">CTF{NBU_SYS_ADMIN_GOD_MODE_2026}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- شريط المهام -->
+    <div class="taskbar">
+        {% if msg %}
+        <div class="msg-display" style="background: {% if 'صحيح' in msg or 'مذهل' in msg %}rgba(40,167,69,0.2); color: #28a745; border: 2px solid #28a745;{% else %}rgba(220,53,69,0.2); color: #dc3545; border: 2px solid #dc3545;{% endif %}">
+            {{ msg }}
+        </div>
+        {% endif %}
+        
+        <form method="POST" style="display:flex; gap:15px; width:100%; align-items: center;">
+            <i class="fas fa-flag-checkered" style="color: #c9a962; font-size: 1.5rem;"></i>
+            <input type="text" name="flag" placeholder="أدخل الـ Flag النهائي الذي ستجده في الخزنة..." required style="flex:1; background:rgba(255,255,255,0.1); border:2px solid #c9a962;">
+            <button type="submit" style="padding: 12px 30px;">
+                <i class="fas fa-paper-plane"></i> إرسال الحل
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // إنشاء النجوم المتحركة
+    function createStars() {
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+    }
+    createStars();
+
+    function openWin(id) { 
+        document.getElementById(id).style.display = 'block';
+    }
+    
+    function closeWin(id) { 
+        document.getElementById(id).style.display = 'none';
+    }
+    
+    function showHint() {
+        Swal.fire({
+            title: '🔐 تلميحة أمنية',
+            html: '<p style="font-size: 1.1rem;">مفتاح الخزنة مخفي في تاريخ ميلاد المؤسس + رمز القسم</p><p style="color: #c9a962; font-weight: bold; margin-top: 10px;">(1990-CS)</p>',
+            icon: 'info',
+            confirmButtonColor: '#c9a962',
+            background: '#0d1117',
+            color: '#e6edf3'
+        });
+    }
+    
+    function checkMail() {
+        const input = document.getElementById('mailInput').value;
+        if(input === '1990-CS') {
+            document.getElementById('mailLock').style.display = 'none';
+            document.getElementById('mailContent').style.display = 'block';
+            Swal.fire({
+                title: '✅ تم فتح البريد!',
+                text: 'لديك رسالة جديدة من الأمن السيبراني',
+                icon: 'success',
+                confirmButtonColor: '#c9a962',
+                background: '#0d1117',
+                color: '#e6edf3'
+            });
+        } else {
+            Swal.fire({
+                title: '❌ كود خاطئ!',
+                text: 'راجع ملفات النظام للحصول على الكود الصحيح',
+                icon: 'error',
+                confirmButtonColor: '#dc3545',
+                background: '#0d1117',
+                color: '#e6edf3'
+            });
+        }
+    }
+
+    function checkVault() {
+        const input = document.getElementById('vaultInput').value;
+        // الحساب: 1446 + 505 = 1951
+        if(input === 'KEY-1951') {
+            document.getElementById('finalFlag').style.display = 'block';
+            Swal.fire({
+                title: '🎉 مبروك!',
+                html: '<p style="font-size: 1.2rem;">لقد فتحت الخزنة بنجاح!</p><p style="color: #c9a962; margin-top: 10px;">الآن انسخ الـ Flag وأرسله في الأسفل</p>',
+                icon: 'success',
+                confirmButtonColor: '#c9a962',
+                background: '#0d1117',
+                color: '#e6edf3'
+            });
+        } else {
+            Swal.fire({
+                title: '⚠️ رمز خاطئ!',
+                text: 'المهاجمون يراقبونك... راجع حساباتك من البريد',
+                icon: 'warning',
+                confirmButtonColor: '#dc3545',
+                background: '#0d1117',
+                color: '#e6edf3'
+            });
+        }
+    }
+</script>
+
+<!-- SweetAlert2 للرسائل الأسطورية -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>
