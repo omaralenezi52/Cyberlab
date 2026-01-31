@@ -194,78 +194,38 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
         
-        /* Buttons */
-        .btn {
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--nbu-green), #3d7f5f);
-            color: white;
-            box-shadow: 0 4px 15px rgba(45, 95, 63, 0.4);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(45, 95, 63, 0.6);
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--nbu-gold), #d4b76a);
-            color: var(--nbu-dark);
-            box-shadow: 0 4px 15px rgba(201, 169, 98, 0.4);
-        }
-        
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(201, 169, 98, 0.6);
-        }
-        
         /* Footer */
         .footer {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
             margin-top: 4rem;
+            background: rgba(10, 14, 39, 0.8);
             border-top: 1px solid rgba(201, 169, 98, 0.2);
             color: var(--text-secondary);
         }
         
         .footer-logo {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--nbu-gold);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .footer-links {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--nbu-gold);
         }
         
         /* Responsive */
@@ -284,27 +244,10 @@
                 padding: 0 1rem;
             }
         }
-        
-        /* Loading Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
-        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
             <a href="/" class="navbar-brand">
@@ -312,40 +255,44 @@
                 <span>NBU Cyber Range</span>
             </a>
             
-            {% if session.get('username') %}
             <div class="navbar-menu">
                 <a href="/" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
-                <a href="/challenges" class="nav-link"><i class="fas fa-flag"></i> التحديات</a>
-                <a href="/leaderboard" class="nav-link"><i class="fas fa-trophy"></i> المتصدرين</a>
-                <a href="/profile" class="nav-link"><i class="fas fa-user"></i> ملفي</a>
-                {% if session.get('is_admin') %}
-                <a href="/admin" class="nav-link"><i class="fas fa-crown"></i> الأدمن</a>
+                <a href="/about" class="nav-link"><i class="fas fa-info-circle"></i> من نحن</a>
+                
+                {% if session.get('username') %}
+                    <a href="/challenges" class="nav-link"><i class="fas fa-flag"></i> التحديات</a>
+                    <a href="/leaderboard" class="nav-link"><i class="fas fa-trophy"></i> المتصدرين</a>
+                    <a href="/profile" class="nav-link"><i class="fas fa-user"></i> ملفي</a>
+                    {% if session.get('is_admin') %}
+                    <a href="/admin" class="nav-link"><i class="fas fa-crown"></i> الأدمن</a>
+                    {% endif %}
+                    <a href="/logout" class="nav-link logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+                {% else %}
+                    <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i> دخول</a>
+                    <a href="/register" class="nav-link"><i class="fas fa-user-plus"></i> تسجيل</a>
                 {% endif %}
-                <a href="/logout" class="nav-link logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
             </div>
-            {% else %}
-            <div class="navbar-menu">
-                <a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i> تسجيل دخول</a>
-                <a href="/register" class="nav-link"><i class="fas fa-user-plus"></i> تسجيل جديد</a>
-            </div>
-            {% endif %}
         </div>
     </nav>
     
-    <!-- Main Content -->
     <div class="container">
         {% block content %}{% endblock %}
     </div>
     
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-logo">
-            <i class="fas fa-shield-halved"></i> جامعة الحدود الشمالية
+            <i class="fas fa-university"></i> جامعة الحدود الشمالية
         </div>
-        <p>NBU Cyberlab </p>
-        <p style="font-size: 0.9rem; margin-top: 0.5rem;">© 2025 Northern Border University. All rights reserved.</p>
+        <p>كلية الحاسبات وتقنية المعلومات - رفحاء</p>
+        <div class="footer-links">
+            <a href="/about">عن المنصة</a>
+            <a href="https://nbu.edu.sa" target="_blank">موقع الجامعة</a>
+            <a href="/challenges">تحديات الأمن السيبراني</a>
+        </div>
+        <p style="font-size: 0.9rem; margin-top: 1rem; color: var(--nbu-gold);">NBU Cyberlab - مختبر محاكاة الاختراق والتدريب التقني</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem;">© 2026 Northern Border University. جميع الحقوق محفوظة.</p>
     </footer>
-    
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>
