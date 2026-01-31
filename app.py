@@ -367,6 +367,9 @@ def baiting_challenge():
                 else: msg = "⚠️ لقد قمت بحل هذا التحدي مسبقاً."
         else: msg = "❌ للأسف! لقد وقعت في الفخ."     
     return render_template('baiting_challenge.html', msg=msg)
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/it_support_challenge', methods=['GET', 'POST'])
 def it_support_challenge():
@@ -381,5 +384,8 @@ def it_support_challenge():
         else: msg = "❌ خطأ! الرد على الإيميل هو ما يريده المهاجم."     
     return render_template('it_support.html', msg=msg)
 
+# ==================== تشغيل السيرفر المتوافق مع Render ====================
 if __name__ == '__main__':
-    app.run(debug=True)
+    # جلب المنفذ من متغيرات البيئة أو استخدام 5000 كافتراضي
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
