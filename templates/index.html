@@ -312,32 +312,24 @@
             margin-bottom: 1rem;
             font-weight: 900;
         }
-        
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .navbar-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .navbar-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+
+        .footer-links {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
         
-        /* تم تعديل هذا الكلاس كما طلبت */
         .Rr {
-            color: #ffffff;       /* تم تغيير اللون إلى الأبيض */
+            color: #ffffff;
             text-decoration: none; 
-            font-weight: bold;   
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .Rr:hover {
+            color: #c9a962;
         }
         
     </style>
@@ -417,7 +409,7 @@
             </div>
             <h3 class="feature-title">تحديات متنوعة</h3>
             <p class="feature-desc">
-                SQL Injection، Ransomware، Social Engineering وغيرها من التحديات الواقعية
+                SQL Injection، Ransomware، Social Engineering وغيرها من التحديات واقعية
             </p>
         </div>
         
@@ -461,9 +453,13 @@
         <div class="footer-logo">
             <i class="fas fa-shield-halved"></i> جامعة الحدود الشمالية
         </div>
-        <p>NBU Cyberlab </p>
-        <a class="Rr"   href="https://comput-info-techn.nbu.edu.sa/"
-         style="font-size: 0.9rem; margin-top: 0.5rem;">© 2025 Northern Border University. All rights reserved.</p> </a>
+        <div class="footer-links">
+            <a href="/about" class="Rr">من نحن</a>
+            <a href="https://comput-info-techn.nbu.edu.sa/" class="Rr" target="_blank">كلية الحاسبات</a>
+        </div>
+        <p style="font-size: 0.9rem; margin-top: 1rem;">
+            © 2026 Northern Border University. All rights reserved.
+        </p>
     </footer>
 </body>
 </html>
